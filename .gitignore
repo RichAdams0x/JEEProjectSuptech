@@ -1,0 +1,40 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+# Compiled output
+angularFrontEnd/dist
+angularFrontEnd/tmp
+angularFrontEnd/out-tsc
+angularFrontEnd/bazel-out
+# Node
+angularFrontEnd/node_modules
+angularFrontEnd/npm-debug.log
+angularFrontEnd/yarn-error.log
+
+# IDEs and editors
+angularFrontEnd/.idea/
+angularFrontEnd/.project
+angularFrontEnd/.classpath
+angularFrontEnd/.c9/
+angularFrontEnd/*.launch
+angularFrontEnd/.settings/
+angularFrontEnd/*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Miscellaneous
+angularFrontEnd/.angular/cache
+angularFrontEnd/.sass-cache/
+angularFrontEnd/connect.lock
+angularFrontEnd/coverage
+angularFrontEnd/libpeerconnection.log
+angularFrontEnd/testem.log
+angularFrontEnd/typings
+
+# System files
+angularFrontEnd/.DS_Store
+angularFrontEnd/Thumbs.db

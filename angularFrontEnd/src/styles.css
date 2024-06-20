@@ -1,0 +1,115 @@
+/* You can add global styles to this file, and also import other style files */
+/* Global Styles */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Section Title */
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Button Styles */
+.btn-animated {
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-animated::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background: rgba(255, 255, 255, 0.3);
+  transition: all 0.75s;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+}
+
+.btn-animated:hover::before {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.btn-animated:hover {
+  background-color: #28a745;
+  color: #fff;
+}
+
+/* Table Styles */
+.custom-table {
+  border-collapse: separate;
+  border-spacing: 0 15px;
+  width: 100%;
+  animation: fadeInUp 1s ease-in-out;
+}
+
+.custom-table thead th {
+  background-color: #007bff;
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+}
+
+.custom-table tbody tr {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.custom-table tbody tr:hover {
+  transform: translateY(-5px);
+}
+
+/* Modal Styles */
+.modal-header,
+.modal-footer {
+  border: none;
+}
+
+.modal-title {
+  font-weight: 700;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Styles pour le mode sombre */
+/* Styles for the dark mode */
+.dark-mode {
+  background-color: #222;
+  color: #fff;
+}
+
+/* Navbar dark mode styles */
+.navbar-dark .navbar-brand,
+.navbar-dark .navbar-nav .nav-link {
+  color: #fff;
+}
+/* Ajoutez d'autres styles pour le mode sombre selon vos besoins */

@@ -1,0 +1,233 @@
+<!-- Add Product Modal -->
+<ng-template #addProduitModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Ajouter un Produit</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="produitForm">
+      <div class="mb-3">
+        <label for="nom" class="form-label">Nom</label>
+        <input
+          type="text"
+          id="nom"
+          class="form-control"
+          formControlName="nom"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="quantite" class="form-label">Quantité</label>
+        <input
+          type="number"
+          id="quantite"
+          class="form-control"
+          formControlName="quantite"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="prix" class="form-label">Prix</label>
+        <input
+          type="number"
+          id="prix"
+          class="form-control"
+          formControlName="prix"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="fournisseur" class="form-label">Fournisseur</label>
+        <select
+          id="fournisseur"
+          class="form-select"
+          formControlName="fournisseurId"
+        >
+          <option
+            *ngFor="let fournisseur of fournisseurs"
+            [value]="fournisseur.id"
+          >
+            {{ fournisseur.nom }}
+          </option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="modal.dismiss('Cross click')"
+    >
+      Annuler
+    </button>
+    <button type="button" class="btn btn-primary" (click)="addProduit()">
+      Ajouter
+    </button>
+  </div>
+</ng-template>
+
+<!-- Edit Product Modal -->
+<ng-template #editProduitModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Modifier Produit</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="produitEditForm">
+      <div class="mb-3">
+        <label for="edit-nom" class="form-label">Nom</label>
+        <input
+          type="text"
+          id="edit-nom"
+          class="form-control"
+          formControlName="nom"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="edit-prix" class="form-label">Prix</label>
+        <input
+          type="number"
+          id="edit-prix"
+          class="form-control"
+          formControlName="prix"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="edit-quantite" class="form-label">Quantité</label>
+        <input
+          type="number"
+          id="edit-quantite"
+          class="form-control"
+          formControlName="quantite"
+        />
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="modal.dismiss('Cross click')"
+    >
+      Annuler
+    </button>
+    <button type="button" class="btn btn-primary" (click)="updateProduit()">
+      Enregistrer
+    </button>
+  </div>
+</ng-template>
+
+<!-- Delete Confirmation Modal -->
+<ng-template #deleteConfirmationModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Confirmation de Suppression</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <p>Êtes-vous sûr de vouloir supprimer ce produit ?</p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="modal.dismiss('Cross click')"
+    >
+      Annuler
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="confirmDeleteProduit()"
+    >
+      Supprimer
+    </button>
+  </div>
+</ng-template>
+
+<!-- Delete Success Modal -->
+<ng-template #deleteSuccessModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Suppression Réussie</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <p>Le produit a été supprimé avec succès.</p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="modal.dismiss('Cross click')"
+    >
+      OK
+    </button>
+  </div>
+</ng-template>
+
+<!-- Product Management Section -->
+<div class="container mt-5 text-center">
+  <h2>Gestion des Produits</h2>
+  <button
+    style="background-color: dodgerblue; color: white"
+    class="btn btn-animated"
+    (click)="openModal(addProduitModal)"
+  >
+    Ajouter Produit
+  </button>
+  <table class="table custom-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Prix</th>
+        <th>Quantité</th>
+        <th>Fournisseur</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let produit of produits">
+        <td>{{ produit.id }}</td>
+        <td>{{ produit.nom }}</td>
+        <td>{{ produit.prix }}</td>
+        <td>{{ produit.quantite }}</td>
+        <td>{{ produit.fournisseur?.nom ?? "" }}</td>
+        <td>
+          <button
+            style="margin-right: 10px"
+            class="btn btn-primary btn-sm btn-animated"
+            (click)="openEditModal(produit, editProduitModal)"
+          >
+            Editer
+          </button>
+          <button
+            class="btn btn-danger btn-sm btn-animated"
+            (click)="
+              openDeleteConfirmationModal(produit.id, deleteConfirmationModal)
+            "
+          >
+            Supprimer
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

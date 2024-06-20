@@ -1,0 +1,208 @@
+<!-- Supplier Table -->
+<div class="container mt-5 text-center">
+  <h2>Gestion des Fournisseurs</h2>
+  <button
+    style="background-color: dodgerblue; color: white"
+    class="btn btn-animated"
+    (click)="openModal(fournisseurModal)"
+  >
+    Ajouter Fournisseur
+  </button>
+  <table class="table mt-3 custom-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Prenom</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let fournisseur of fournisseurs">
+        <td>{{ fournisseur.id }}</td>
+        <td>{{ fournisseur.nom }}</td>
+        <td>{{ fournisseur.prenom }}</td>
+        <td>{{ fournisseur.email }}</td>
+        <td>
+          <button
+            style="margin-right: 10px"
+            class="btn btn-primary btn-sm btn-animated"
+            (click)="openEditModal(fournisseur, editFournisseurModal)"
+          >
+            Editer
+          </button>
+          <button
+            class="btn btn-danger btn-sm btn-animated"
+            (click)="deleteFournisseur(fournisseur.id)"
+          >
+            Supprimer
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modals -->
+
+<ng-template #fournisseurModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Ajouter un Fournisseur</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="fournisseurForm">
+      <div class="mb-3">
+        <label for="nom" class="form-label">Nom</label>
+        <input
+          type="text"
+          id="nom"
+          class="form-control"
+          formControlName="nom"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="prenom" class="form-label">Prenom</label>
+        <input
+          type="text"
+          id="prenom"
+          class="form-control"
+          formControlName="prenom"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="text"
+          id="email"
+          class="form-control"
+          formControlName="email"
+        />
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="modal.dismiss('Cross click')"
+    >
+      Fermer
+    </button>
+    <button type="button" class="btn btn-primary" (click)="addFournisseur()">
+      Ajouter
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #editFournisseurModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Modifier Fournisseur</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="fournisseurEditForm">
+      <div class="mb-3">
+        <label for="edit-nom" class="form-label">Nom</label>
+        <input
+          type="text"
+          id="edit-nom"
+          class="form-control"
+          formControlName="nom"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="edit-prenom" class="form-label">Prenom</label>
+        <input
+          type="text"
+          id="edit-prenom"
+          class="form-control"
+          formControlName="prenom"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="edit-nom" class="form-label">Email</label>
+        <input
+          type="text"
+          id="edit-email"
+          class="form-control"
+          formControlName="email"
+        />
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="modal.dismiss('Cross click')"
+    >
+      Annuler
+    </button>
+    <button type="button" class="btn btn-primary" (click)="updateFournisseur()">
+      Enregistrer
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #confirmModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Confirmer la Suppression</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <p>Êtes-vous sûr de vouloir supprimer ce fournisseur ?</p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="modal.dismiss('Cross click')"
+    >
+      Annuler
+    </button>
+    <button type="button" class="btn btn-danger" (click)="confirmDelete()">
+      Supprimer
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #successModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Succès</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <p>Le fournisseur a été supprimé avec succès.</p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="modal.dismiss('Cross click')"
+    >
+      Fermer
+    </button>
+  </div>
+</ng-template>

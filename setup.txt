@@ -1,0 +1,6 @@
+Pour lancer ce projet:
+-creer une base de donnée ventes_gestion sur php my admin
+-rentrer dans le dossier angular et lancer npm install
+-lancer xamp control
+-lancer le projet angular sur le port 4200
+-lancer le projet spring sur le port 8080

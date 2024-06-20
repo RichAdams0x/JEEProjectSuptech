@@ -1,0 +1,226 @@
+<div class="container mt-5 text-center">
+  <!-- Ajout de la classe "text-center" -->
+  <h2>Gestion des Commandes</h2>
+  <button
+    style="background-color: dodgerblue; color: white"
+    class="btn btn-animated"
+    (click)="openModal(addCommandeModal)"
+  >
+    Créer Commande
+  </button>
+  <table class="table mt-3 custom-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Client</th>
+        <th>Date Commande</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let commande of commandes">
+        <td>{{ commande.id }}</td>
+        <td>{{ commande.client.nom }}</td>
+        <td>{{ getTime(commande.dateCMD) }}</td>
+        <td>
+          <button
+            style="margin-right: 10px"
+            class="btn btn-primary btn-sm btn-animated"
+            (click)="openAddLigneCommandeModal(commande, addLigneCommandeModal)"
+          >
+            Ajouter Ligne
+          </button>
+          <button
+            style="margin-right: 10px"
+            class="btn btn-secondary btn-sm btn-animated"
+            (click)="
+              openViewLignesCommandeModal(commande, viewLignesCommandeModal)
+            "
+          >
+            Voir Lignes
+          </button>
+          <button
+            class="btn btn-danger btn-sm btn-animated"
+            (click)="openConfirmDeleteModal(commande.id, confirmDeleteModal)"
+          >
+            Supprimer
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Add Commande Modal -->
+<ng-template #addCommandeModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Créer Commande</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="commandeForm">
+      <div class="mb-3">
+        <label for="client" class="form-label">Client</label>
+        <select id="client" class="form-control" formControlName="client">
+          <option *ngFor="let client of clients" [value]="client.id">
+            {{ client.nom }}
+          </option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="modal.dismiss('Cross click')"
+    >
+      Annuler
+    </button>
+    <button type="button" class="btn btn-primary" (click)="addCommande()">
+      Ajouter
+    </button>
+  </div>
+</ng-template>
+
+<!-- Add Ligne Commande Modal -->
+<ng-template #addLigneCommandeModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Ajouter Ligne de Commande</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="ligneCommandeForm">
+      <div class="mb-3">
+        <label for="produit" class="form-label">Produit</label>
+        <select id="produit" class="form-control" formControlName="produit">
+          <option *ngFor="let produit of produits" [value]="produit.id">
+            {{ produit.nom }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="quantite" class="form-label">Quantité</label>
+        <input
+          type="number"
+          id="quantite"
+          class="form-control"
+          formControlName="quantite"
+        />
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="modal.dismiss('Cross click')"
+    >
+      Annuler
+    </button>
+    <button type="button" class="btn btn-primary" (click)="addLigneCommande()">
+      Ajouter
+    </button>
+  </div>
+</ng-template>
+
+<!-- View Lignes Commande Modal -->
+<ng-template #viewLignesCommandeModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Lignes de Commande</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Produit</th>
+          <th>Quantité</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ligne of lignesCommande">
+          <td>{{ ligne.id }}</td>
+          <td>{{ ligne.produit.nom }}</td>
+          <td>{{ ligne.quantite }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="modal.dismiss('Cross click')"
+    >
+      Fermer
+    </button>
+  </div>
+</ng-template>
+
+<!-- Confirmation Modal -->
+<ng-template #confirmDeleteModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Confirmation de suppression</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    Êtes-vous sûr de vouloir supprimer cette commande ?
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="modal.dismiss('Cross click')"
+    >
+      Annuler
+    </button>
+    <button type="button" class="btn btn-danger" (click)="confirmDelete()">
+      Supprimer
+    </button>
+  </div>
+</ng-template>
+
+<!-- Success Modal -->
+<ng-template #successDeleteModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Succès</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">La commande a été supprimée avec succès.</div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="modal.dismiss('Cross click')"
+    >
+      OK
+    </button>
+  </div>
+</ng-template>
